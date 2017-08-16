@@ -1,0 +1,7 @@
+1- Extrar os arquivos e enviar para o servidor.
+2- criar um novo banco de dados.
+3- importar as tabelas que se encontra na pasta "banco de dados"
+4- configurar dados do banco de dados no arquivo "database.php" que se econtra na pasta application/config/
+5- Entrar com usuario admin e senha 12345678, alterar senha após o primeiro acesso.
+
+Ok agora é so aproveitar o sistema.
