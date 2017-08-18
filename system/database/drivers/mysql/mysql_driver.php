@@ -50,7 +50,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author		EllisLab Dev Team
  * @link		https://codeigniter.com/user_guide/database/
  */
-class CI_DB_mysql_driver extends CI_DB {
+class CI_DB_mysql_driver extends CI_DB_driver {
 
 	/**
 	 * Database driver
@@ -132,8 +132,8 @@ class CI_DB_mysql_driver extends CI_DB {
 
 		// Error suppression is necessary mostly due to PHP 5.5+ issuing E_DEPRECATED messages
 		$this->conn_id = ($persistent === TRUE)
-			? mysqli_pconnect($this->hostname, $this->username, $this->password, $client_flags)
-			: mysqli_connect($this->hostname, $this->username, $this->password, TRUE, $client_flags);
+			? mysql_pconnect($this->hostname, $this->username, $this->password, $client_flags)
+			: mysql_connect($this->hostname, $this->username, $this->password, TRUE, $client_flags);
 
 		// ----------------------------------------------------------------
 
@@ -184,7 +184,7 @@ class CI_DB_mysql_driver extends CI_DB {
 	 */
 	public function reconnect()
 	{
-		if (mysqli_ping($this->conn_id) === FALSE)
+		if (mysql_ping($this->conn_id) === FALSE)
 		{
 			$this->conn_id = FALSE;
 		}
@@ -205,7 +205,7 @@ class CI_DB_mysql_driver extends CI_DB {
 			$database = $this->database;
 		}
 
-		if (mysqli_select_db($database, $this->conn_id))
+		if (mysql_select_db($database, $this->conn_id))
 		{
 			$this->database = $database;
 			$this->data_cache = array();
@@ -225,7 +225,7 @@ class CI_DB_mysql_driver extends CI_DB {
 	 */
 	protected function _db_set_charset($charset)
 	{
-		return mysqli_set_charset($charset, $this->conn_id);
+		return mysql_set_charset($charset, $this->conn_id);
 	}
 
 	// --------------------------------------------------------------------
@@ -242,7 +242,7 @@ class CI_DB_mysql_driver extends CI_DB {
 			return $this->data_cache['version'];
 		}
 
-		if ( ! $this->conn_id OR ($version = mysqli_get_server_info($this->conn_id)) === FALSE)
+		if ( ! $this->conn_id OR ($version = mysql_get_server_info($this->conn_id)) === FALSE)
 		{
 			return FALSE;
 		}
@@ -260,7 +260,7 @@ class CI_DB_mysql_driver extends CI_DB {
 	 */
 	protected function _execute($sql)
 	{
-		return mysqli_query($this->_prep_query($sql), $this->conn_id);
+		return mysql_query($this->_prep_query($sql), $this->conn_id);
 	}
 
 	// --------------------------------------------------------------------
@@ -344,7 +344,7 @@ class CI_DB_mysql_driver extends CI_DB {
 	 */
 	protected function _escape_str($str)
 	{
-		return mysqli_real_escape_string($str, $this->conn_id);
+		return mysql_real_escape_string($str, $this->conn_id);
 	}
 
 	// --------------------------------------------------------------------
@@ -356,7 +356,7 @@ class CI_DB_mysql_driver extends CI_DB {
 	 */
 	public function affected_rows()
 	{
-		return mysqli_affected_rows($this->conn_id);
+		return mysql_affected_rows($this->conn_id);
 	}
 
 	// --------------------------------------------------------------------
@@ -368,7 +368,7 @@ class CI_DB_mysql_driver extends CI_DB {
 	 */
 	public function insert_id()
 	{
-		return mysqli_insert_id($this->conn_id);
+		return mysql_insert_id($this->conn_id);
 	}
 
 	// --------------------------------------------------------------------
@@ -454,7 +454,7 @@ class CI_DB_mysql_driver extends CI_DB {
 	 */
 	public function error()
 	{
-		return array('code' => mysqli_errno($this->conn_id), 'message' => mysqli_error($this->conn_id));
+		return array('code' => mysql_errno($this->conn_id), 'message' => mysql_error($this->conn_id));
 	}
 
 	// --------------------------------------------------------------------
@@ -488,7 +488,7 @@ class CI_DB_mysql_driver extends CI_DB {
 	{
 		// Error suppression to avoid annoying E_WARNINGs in cases
 		// where the connection has already been closed for some reason.
-		@mysqli_close($this->conn_id);
+		@mysql_close($this->conn_id);
 	}
 
 }
