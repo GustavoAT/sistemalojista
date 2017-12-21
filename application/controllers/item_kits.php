@@ -11,21 +11,21 @@ class Item_kits extends Secure_area implements iData_controller
 	function index()
 	{
 		$config['base_url'] = site_url('/item_kits/index');
-		$config['total_rows'] = $this->Item_kit->count_all();
+		$config['total_rows'] = $this->item_kit->count_all();
 		$config['per_page'] = '20';
 		$config['uri_segment'] = 3;
 		$this->pagination->initialize($config);
 		
 		$data['controller_name']=strtolower(get_class());
 		$data['form_width']=$this->get_form_width();
-		$data['manage_table']=get_item_kits_manage_table( $this->Item_kit->get_all( $config['per_page'], $this->uri->segment( $config['uri_segment'] ) ), $this );
+		$data['manage_table']=get_item_kits_manage_table( $this->item_kit->get_all( $config['per_page'], $this->uri->segment( $config['uri_segment'] ) ), $this );
 		$this->load->view('item_kits/manage',$data);
 	}
 
 	function search()
 	{
 		$search=$this->input->post('search');
-		$data_rows=get_item_kits_manage_table_data_rows($this->Item_kit->search($search),$this);
+		$data_rows=get_item_kits_manage_table_data_rows($this->item_kit->search($search),$this);
 		echo $data_rows;
 	}
 
@@ -34,20 +34,20 @@ class Item_kits extends Secure_area implements iData_controller
 	*/
 	function suggest()
 	{
-		$suggestions = $this->Item_kit->get_search_suggestions($this->input->post('q'),$this->input->post('limit'));
+		$suggestions = $this->item_kit->get_search_suggestions($this->input->post('q'),$this->input->post('limit'));
 		echo implode("\n",$suggestions);
 	}
 
 	function get_row()
 	{
 		$item_kit_id = $this->input->post('row_id');
-		$data_row=get_item_kit_data_row($this->Item_kit->get_info($item_kit_id),$this);
+		$data_row=get_item_kit_data_row($this->item_kit->get_info($item_kit_id),$this);
 		echo $data_row;
 	}
 
 	function view($item_kit_id=-1)
 	{
-		$data['item_kit_info']=$this->Item_kit->get_info($item_kit_id);
+		$data['item_kit_info']=$this->item_kit->get_info($item_kit_id);
 		$this->load->view("item_kits/form",$data);
 	}
 	
@@ -58,7 +58,7 @@ class Item_kits extends Secure_area implements iData_controller
 		'description'=>$this->input->post('description')
 		);
 		
-		if($this->Item_kit->save($item_kit_data,$item_kit_id))
+		if($this->item_kit->save($item_kit_data,$item_kit_id))
 		{
 			//New item kit
 			if($item_kit_id==-1)
@@ -84,7 +84,7 @@ class Item_kits extends Secure_area implements iData_controller
 						);
 				}
 			
-				$this->Item_kit_items->save($item_kit_items, $item_kit_id);
+				$this->item_kit_items->save($item_kit_items, $item_kit_id);
 			}
 		}
 		else//failure
@@ -99,7 +99,7 @@ class Item_kits extends Secure_area implements iData_controller
 	{
 		$item_kits_to_delete=$this->input->post('ids');
 
-		if($this->Item_kit->delete_list($item_kits_to_delete))
+		if($this->item_kit->delete_list($item_kits_to_delete))
 		{
 			echo json_encode(array('success'=>true,'message'=>$this->lang->line('item_kits_successful_deleted').' '.
 			count($item_kits_to_delete).' '.$this->lang->line('item_kits_one_or_multiple')));
@@ -117,7 +117,7 @@ class Item_kits extends Secure_area implements iData_controller
 		$item_kit_ids = explode(':', $item_kit_ids);
 		foreach ($item_kit_ids as $item_kid_id)
 		{
-			$item_kit_info = $this->Item_kit->get_info($item_kid_id);
+			$item_kit_info = $this->item_kit->get_info($item_kid_id);
 
 			$result[] = array('name' =>$item_kit_info->name, 'id'=> 'KIT '.$item_kid_id);
 		}

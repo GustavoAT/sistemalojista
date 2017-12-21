@@ -186,9 +186,9 @@ class Sales extends Secure_area
 		$data['receipt_title']=$this->lang->line('sales_receipt');
 		$data['transaction_time']= date('m/d/Y h:i:s a');
 		$customer_id=$this->sale_lib->get_customer();
-		$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
+		$employee_id=$this->employee->get_logged_in_employee_info()->person_id;
 		$comment = $this->sale_lib->get_comment();
-		$emp_info=$this->Employee->get_info($employee_id);
+		$emp_info=$this->employee->get_info($employee_id);
 		$data['payments']=$this->sale_lib->get_payments();
 		$data['amount_change']=to_currency($this->sale_lib->get_amount_due() * -1);
 		$data['employee']=$emp_info->first_name.' '.$emp_info->last_name;
@@ -236,7 +236,7 @@ class Sales extends Secure_area
 		$data['receipt_title']=$this->lang->line('sales_receipt');
 		$data['transaction_time']= date('m/d/Y h:i:s a', strtotime($sale_info['sale_time']));
 		$customer_id=$this->sale_lib->get_customer();
-		$emp_info=$this->Employee->get_info($sale_info['employee_id']);
+		$emp_info=$this->employee->get_info($sale_info['employee_id']);
 		$data['payment_type']=$sale_info['payment_type'];
 		$data['amount_change']=to_currency($this->sale_lib->get_amount_due() * -1);
 		$data['employee']=$emp_info->first_name.' '.$emp_info->last_name;
@@ -263,7 +263,7 @@ class Sales extends Secure_area
 		}
 
 		$data['employees'] = array();
-		foreach ($this->Employee->get_all()->result() as $employee)
+		foreach ($this->employee->get_all()->result() as $employee)
 		{
 			$data['employees'][$employee->person_id] = $employee->first_name . ' '. $employee->last_name;
 		}
@@ -330,14 +330,14 @@ class Sales extends Secure_area
 	
 	function _reload($data=array())
 	{
-		$person_info = $this->Employee->get_logged_in_employee_info();
+		$person_info = $this->employee->get_logged_in_employee_info();
 		$data['cart']=$this->sale_lib->get_cart();
 		$data['modes']=array('sale'=>$this->lang->line('sales_sale'),'return'=>$this->lang->line('sales_return'));
 		$data['mode']=$this->sale_lib->get_mode();
 		$data['subtotal']=$this->sale_lib->get_subtotal();
 		$data['taxes']=$this->sale_lib->get_taxes();
 		$data['total']=$this->sale_lib->get_total();
-		$data['items_module_allowed'] = $this->Employee->has_permission('items', $person_info->person_id);
+		$data['items_module_allowed'] = $this->employee->has_permission('items', $person_info->person_id);
 		$data['comment'] = $this->sale_lib->get_comment();
 		$data['email_receipt'] = $this->sale_lib->get_email_receipt();
 		$data['payments_total']=$this->sale_lib->get_payments_total();
@@ -379,9 +379,9 @@ class Sales extends Secure_area
 		$data['receipt_title']=$this->lang->line('sales_receipt');
 		$data['transaction_time']= date('m/d/Y h:i:s a');
 		$customer_id=$this->sale_lib->get_customer();
-		$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
+		$employee_id=$this->employee->get_logged_in_employee_info()->person_id;
 		$comment = $this->input->post('comment');
-		$emp_info=$this->Employee->get_info($employee_id);
+		$emp_info=$this->employee->get_info($employee_id);
 		$payment_type = $this->input->post('payment_type');
 		$data['payment_type']=$this->input->post('payment_type');
 		//Alain Multiple payments

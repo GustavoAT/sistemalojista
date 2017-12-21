@@ -8,7 +8,7 @@ class Login extends CI_Controller
 	
 	function index()
 	{
-		if($this->Employee->is_logged_in())
+		if($this->employee->is_logged_in())
 		{
 			redirect('home');
 		}
@@ -32,7 +32,7 @@ class Login extends CI_Controller
 	{
 		$password = $this->input->post("password");	
 		
-		if(!$this->Employee->login($username,$password))
+		if(!$this->employee->login($username,$password))
 		{
 			$this->form_validation->set_message('login_check', $this->lang->line('login_invalid_username_and_password'));
 			return false;

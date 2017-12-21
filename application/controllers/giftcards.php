@@ -11,21 +11,21 @@ class Giftcards extends Secure_area implements iData_controller
 	function index()
 	{
 		$config['base_url'] = site_url('/giftcards/index');
-		$config['total_rows'] = $this->Giftcard->count_all();
+		$config['total_rows'] = $this->giftcard->count_all();
 		$config['per_page'] = '20';
 		$config['uri_segment'] = 3;
 		$this->pagination->initialize($config);
 		
 		$data['controller_name']=strtolower(get_class());
 		$data['form_width']=$this->get_form_width();
-		$data['manage_table']=get_giftcards_manage_table( $this->Giftcard->get_all( $config['per_page'], $this->uri->segment( $config['uri_segment'] ) ), $this );
+		$data['manage_table']=get_giftcards_manage_table( $this->giftcard->get_all( $config['per_page'], $this->uri->segment( $config['uri_segment'] ) ), $this );
 		$this->load->view('giftcards/manage',$data);
 	}
 
 	function search()
 	{
 		$search=$this->input->post('search');
-		$data_rows=get_giftcards_manage_table_data_rows($this->Giftcard->search($search),$this);
+		$data_rows=get_giftcards_manage_table_data_rows($this->giftcard->search($search),$this);
 		echo $data_rows;
 	}
 
@@ -34,20 +34,20 @@ class Giftcards extends Secure_area implements iData_controller
 	*/
 	function suggest()
 	{
-		$suggestions = $this->Giftcard->get_search_suggestions($this->input->post('q'),$this->input->post('limit'));
+		$suggestions = $this->giftcard->get_search_suggestions($this->input->post('q'),$this->input->post('limit'));
 		echo implode("\n",$suggestions);
 	}
 
 	function get_row()
 	{
 		$giftcard_id = $this->input->post('row_id');
-		$data_row=get_giftcard_data_row($this->Giftcard->get_info($giftcard_id),$this);
+		$data_row=get_giftcard_data_row($this->giftcard->get_info($giftcard_id),$this);
 		echo $data_row;
 	}
 
 	function view($giftcard_id=-1)
 	{
-		$data['giftcard_info']=$this->Giftcard->get_info($giftcard_id);
+		$data['giftcard_info']=$this->giftcard->get_info($giftcard_id);
 
 		$this->load->view("giftcards/form",$data);
 	}
@@ -59,7 +59,7 @@ class Giftcards extends Secure_area implements iData_controller
 		'value'=>$this->input->post('value')
 		);
 
-		if( $this->Giftcard->save( $giftcard_data, $giftcard_id ) )
+		if( $this->giftcard->save( $giftcard_data, $giftcard_id ) )
 		{
 			//New giftcard
 			if($giftcard_id==-1)
@@ -86,7 +86,7 @@ class Giftcards extends Secure_area implements iData_controller
 	{
 		$giftcards_to_delete=$this->input->post('ids');
 
-		if($this->Giftcard->delete_list($giftcards_to_delete))
+		if($this->giftcard->delete_list($giftcards_to_delete))
 		{
 			echo json_encode(array('success'=>true,'message'=>$this->lang->line('giftcards_successful_deleted').' '.
 			count($giftcards_to_delete).' '.$this->lang->line('giftcards_one_or_multiple')));

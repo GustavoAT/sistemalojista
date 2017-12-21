@@ -439,7 +439,7 @@ class Sale_lib
 	function get_taxes()
 	{
 		$customer_id = $this->get_customer();
-		$customer = $this->CI->Customer->get_info($customer_id);
+		$customer = $this->CI->customer->get_info($customer_id);
 
 		//Do not charge sales tax if we have a customer that is not taxable
 		if (!$customer->taxable and $customer_id!=-1)

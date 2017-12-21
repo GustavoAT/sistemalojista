@@ -10,14 +10,14 @@ class Suppliers extends Person_controller
 	function index()
 	{
 		$config['base_url'] = site_url('/suppliers/index');
-		$config['total_rows'] = $this->Supplier->count_all();
+		$config['total_rows'] = $this->supplier->count_all();
 		$config['per_page'] = '20';
 		$config['uri_segment'] = 3;
 		$this->pagination->initialize($config);
 		
 		$data['controller_name']=strtolower(get_class());
 		$data['form_width']=$this->get_form_width();
-		$data['manage_table']=get_supplier_manage_table( $this->Supplier->get_all( $config['per_page'], $this->uri->segment( $config['uri_segment'] ) ), $this );
+		$data['manage_table']=get_supplier_manage_table( $this->supplier->get_all( $config['per_page'], $this->uri->segment( $config['uri_segment'] ) ), $this );
 		$this->load->view('suppliers/manage',$data);
 	}
 	
@@ -27,7 +27,7 @@ class Suppliers extends Person_controller
 	function search()
 	{
 		$search=$this->input->post('search');
-		$data_rows=get_supplier_manage_table_data_rows($this->Supplier->search($search),$this);
+		$data_rows=get_supplier_manage_table_data_rows($this->supplier->search($search),$this);
 		echo $data_rows;
 	}
 	
@@ -36,7 +36,7 @@ class Suppliers extends Person_controller
 	*/
 	function suggest()
 	{
-		$suggestions = $this->Supplier->get_search_suggestions($this->input->post('q'),$this->input->post('limit'));
+		$suggestions = $this->supplier->get_search_suggestions($this->input->post('q'),$this->input->post('limit'));
 		echo implode("\n",$suggestions);
 	}
 	
@@ -45,7 +45,7 @@ class Suppliers extends Person_controller
 	*/
 	function view($supplier_id=-1)
 	{
-		$data['person_info']=$this->Supplier->get_info($supplier_id);
+		$data['person_info']=$this->supplier->get_info($supplier_id);
 		$this->load->view("suppliers/form",$data);
 	}
 	
@@ -71,7 +71,7 @@ class Suppliers extends Person_controller
 		'company_name'=>$this->input->post('company_name'),
 		'account_number'=>$this->input->post('account_number')=='' ? null:$this->input->post('account_number'),
 		);
-		if($this->Supplier->save($person_data,$supplier_data,$supplier_id))
+		if($this->supplier->save($person_data,$supplier_data,$supplier_id))
 		{
 			//New supplier
 			if($supplier_id==-1)
@@ -99,7 +99,7 @@ class Suppliers extends Person_controller
 	{
 		$suppliers_to_delete=$this->input->post('ids');
 		
-		if($this->Supplier->delete_list($suppliers_to_delete))
+		if($this->supplier->delete_list($suppliers_to_delete))
 		{
 			echo json_encode(array('success'=>true,'message'=>$this->lang->line('suppliers_successful_deleted').' '.
 			count($suppliers_to_delete).' '.$this->lang->line('suppliers_one_or_multiple')));
@@ -116,7 +116,7 @@ class Suppliers extends Person_controller
 	function get_row()
 	{
 		$person_id = $this->input->post('row_id');
-		$data_row=get_supplier_data_row($this->Supplier->get_info($person_id),$this);
+		$data_row=get_supplier_data_row($this->supplier->get_info($person_id),$this);
 		echo $data_row;
 	}
 	

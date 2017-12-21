@@ -10,14 +10,14 @@ class Employees extends Person_controller
 	function index()
 	{
 		$config['base_url'] = site_url('/employees/index');
-		$config['total_rows'] = $this->Employee->count_all();
+		$config['total_rows'] = $this->employee->count_all();
 		$config['per_page'] = '20';
 		$config['uri_segment'] = 3;
 		$this->pagination->initialize($config);
 		
 		$data['controller_name']=strtolower(get_class());
 		$data['form_width']=$this->get_form_width();
-		$data['manage_table']=get_people_manage_table( $this->Employee->get_all( $config['per_page'], $this->uri->segment( $config['uri_segment'] ) ), $this );
+		$data['manage_table']=get_people_manage_table( $this->employee->get_all( $config['per_page'], $this->uri->segment( $config['uri_segment'] ) ), $this );
 		$this->load->view('people/manage',$data);
 	}
 	
@@ -27,7 +27,7 @@ class Employees extends Person_controller
 	function search()
 	{
 		$search=$this->input->post('search');
-		$data_rows=get_people_manage_table_data_rows($this->Employee->search($search),$this);
+		$data_rows=get_people_manage_table_data_rows($this->employee->search($search),$this);
 		echo $data_rows;
 	}
 	
@@ -36,7 +36,7 @@ class Employees extends Person_controller
 	*/
 	function suggest()
 	{
-		$suggestions = $this->Employee->get_search_suggestions($this->input->post('q'),$this->input->post('limit'));
+		$suggestions = $this->employee->get_search_suggestions($this->input->post('q'),$this->input->post('limit'));
 		echo implode("\n",$suggestions);
 	}
 	
@@ -45,7 +45,7 @@ class Employees extends Person_controller
 	*/
 	function view($employee_id=-1)
 	{
-		$data['person_info']=$this->Employee->get_info($employee_id);
+		$data['person_info']=$this->employee->get_info($employee_id);
 		$data['all_modules']=$this->Module->get_all_modules();
 		$this->load->view("employees/form",$data);
 	}
@@ -83,7 +83,7 @@ class Employees extends Person_controller
 			$employee_data=array('username'=>$this->input->post('username'));
 		}
 		
-		if($this->Employee->save($person_data,$employee_data,$permission_data,$employee_id))
+		if($this->employee->save($person_data,$employee_data,$permission_data,$employee_id))
 		{
 			//New employee
 			if($employee_id==-1)
@@ -111,7 +111,7 @@ class Employees extends Person_controller
 	{
 		$employees_to_delete=$this->input->post('ids');
 		
-		if($this->Employee->delete_list($employees_to_delete))
+		if($this->employee->delete_list($employees_to_delete))
 		{
 			echo json_encode(array('success'=>true,'message'=>$this->lang->line('employees_successful_deleted').' '.
 			count($employees_to_delete).' '.$this->lang->line('employees_one_or_multiple')));

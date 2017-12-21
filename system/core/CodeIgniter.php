@@ -55,7 +55,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @var	string
  *
  */
-	const CI_VERSION = '3.1.5';
+	const CI_VERSION = '3.1.4';
 
 /*
  * ------------------------------------------------------
@@ -399,7 +399,7 @@ if ( ! is_php('5.4'))
  */
 
 	$e404 = FALSE;
-	$class = ucfirst($RTR->class);
+	$class = $RTR->class;
 	$method = $RTR->method;
 
 	if (empty($class) OR ! file_exists(APPPATH.'controllers/'.$RTR->directory.$class.'.php'))
@@ -434,7 +434,7 @@ if ( ! is_php('5.4'))
 		 * ReflectionMethod::isConstructor() is the ONLY reliable check,
 		 * knowing which method will be executed as a constructor.
 		 */
-		elseif ( ! is_callable(array($class, $method)))
+		elseif ( ! is_callable(array($class, $method)) && strcasecmp($class, $method) === 0)
 		{
 			$reflection = new ReflectionMethod($class, $method);
 			if ( ! $reflection->isPublic() OR $reflection->isConstructor())

@@ -11,14 +11,14 @@ class Items extends Secure_area implements iData_controller
 	function index()
 	{
 		$config['base_url'] = site_url('/items/index');
-		$config['total_rows'] = $this->Item->count_all();
+		$config['total_rows'] = $this->item->count_all();
 		$config['per_page'] = '20';
 		$config['uri_segment'] = 3;
 		$this->pagination->initialize($config);
 		
 		$data['controller_name']=strtolower(get_class());
 		$data['form_width']=$this->get_form_width();
-		$data['manage_table']=get_items_manage_table( $this->Item->get_all( $config['per_page'], $this->uri->segment( $config['uri_segment'] ) ), $this );
+		$data['manage_table']=get_items_manage_table( $this->item->get_all( $config['per_page'], $this->uri->segment( $config['uri_segment'] ) ), $this );
 		$this->load->view('items/manage',$data);
 	}
 
@@ -34,20 +34,20 @@ class Items extends Secure_area implements iData_controller
 		$data['no_description']=$this->input->post('no_description');
 		$data['controller_name']=strtolower(get_class());
 		$data['form_width']=$this->get_form_width();
-		$data['manage_table']=get_items_manage_table($this->Item->get_all_filtered($low_inventory,$is_serialized,$no_description),$this);
+		$data['manage_table']=get_items_manage_table($this->item->get_all_filtered($low_inventory,$is_serialized,$no_description),$this);
 		$this->load->view('items/manage',$data);
 	}
 
 	function find_item_info()
 	{
 		$item_number=$this->input->post('scan_item_number');
-		echo json_encode($this->Item->find_item_info($item_number));
+		echo json_encode($this->item->find_item_info($item_number));
 	}
 
 	function search()
 	{
 		$search=$this->input->post('search');
-		$data_rows=get_items_manage_table_data_rows($this->Item->search($search),$this);
+		$data_rows=get_items_manage_table_data_rows($this->item->search($search),$this);
 		echo $data_rows;
 	}
 
@@ -56,13 +56,13 @@ class Items extends Secure_area implements iData_controller
 	*/
 	function suggest()
 	{
-		$suggestions = $this->Item->get_search_suggestions($this->input->post('q'),$this->input->post('limit'));
+		$suggestions = $this->item->get_search_suggestions($this->input->post('q'),$this->input->post('limit'));
 		echo implode("\n",$suggestions);
 	}
 	
 	function item_search()
 	{
-		$suggestions = $this->Item->get_item_search_suggestions($this->input->post('q'),$this->input->post('limit'));
+		$suggestions = $this->item->get_item_search_suggestions($this->input->post('q'),$this->input->post('limit'));
 		echo implode("\n",$suggestions);
 	}
 	
@@ -71,21 +71,21 @@ class Items extends Secure_area implements iData_controller
 	*/
 	function suggest_category()
 	{
-		$suggestions = $this->Item->get_category_suggestions($this->input->post('q'));
+		$suggestions = $this->item->get_category_suggestions($this->input->post('q'));
 		echo implode("\n",$suggestions);
 	}
 
 	function get_row()
 	{
 		$item_id = $this->input->post('row_id');
-		$data_row=get_item_data_row($this->Item->get_info($item_id),$this);
+		$data_row=get_item_data_row($this->item->get_info($item_id),$this);
 		echo $data_row;
 	}
 
 	function view($item_id=-1)
 	{
-		$data['item_info']=$this->Item->get_info($item_id);
-		$data['item_tax_info']=$this->Item_taxes->get_info($item_id);
+		$data['item_info']=$this->item->get_info($item_id);
+		$data['item_tax_info']=$this->item_taxes->get_info($item_id);
 		$suppliers = array('' => $this->lang->line('items_none'));
 		foreach($this->Supplier->get_all()->result_array() as $row)
 		{
@@ -93,7 +93,7 @@ class Items extends Secure_area implements iData_controller
 		}
 
 		$data['suppliers']=$suppliers;
-		$data['selected_supplier'] = $this->Item->get_info($item_id)->supplier_id;
+		$data['selected_supplier'] = $this->item->get_info($item_id)->supplier_id;
 		$data['default_tax_1_rate']=($item_id==-1) ? $this->Appconfig->get('default_tax_1_rate') : '';
 		$data['default_tax_2_rate']=($item_id==-1) ? $this->Appconfig->get('default_tax_2_rate') : '';
 		$this->load->view("items/form",$data);
@@ -102,13 +102,13 @@ class Items extends Secure_area implements iData_controller
 	//Ramel Inventory Tracking
 	function inventory($item_id=-1)
 	{
-		$data['item_info']=$this->Item->get_info($item_id);
+		$data['item_info']=$this->item->get_info($item_id);
 		$this->load->view("items/inventory",$data);
 	}
 	
 	function count_details($item_id=-1)
 	{
-		$data['item_info']=$this->Item->get_info($item_id);
+		$data['item_info']=$this->item->get_info($item_id);
 		$this->load->view("items/count_details",$data);
 	} //------------------------------------------- Ramel
 
@@ -119,7 +119,7 @@ class Items extends Secure_area implements iData_controller
 		$item_ids = explode(':', $item_ids);
 		foreach ($item_ids as $item_id)
 		{
-			$item_info = $this->Item->get_info($item_id);
+			$item_info = $this->item->get_info($item_id);
 
 			$result[] = array('name' =>$item_info->name, 'id'=> $item_id);
 		}
@@ -167,10 +167,10 @@ class Items extends Secure_area implements iData_controller
 		);
 		
 		$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
-		$cur_item_info = $this->Item->get_info($item_id);
+		$cur_item_info = $this->item->get_info($item_id);
 
 
-		if($this->Item->save($item_data,$item_id))
+		if($this->item->save($item_data,$item_id))
 		{
 			//New item
 			if($item_id==-1)
@@ -204,7 +204,7 @@ class Items extends Secure_area implements iData_controller
 					$items_taxes_data[] = array('name'=>$tax_names[$k], 'percent'=>$tax_percents[$k] );
 				}
 			}
-			$this->Item_taxes->save($items_taxes_data, $item_id);
+			$this->item_taxes->save($items_taxes_data, $item_id);
 		}
 		else//failure
 		{
@@ -218,7 +218,7 @@ class Items extends Secure_area implements iData_controller
 	function save_inventory($item_id=-1)
 	{	
 		$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
-		$cur_item_info = $this->Item->get_info($item_id);
+		$cur_item_info = $this->item->get_info($item_id);
 		$inv_data = array
 		(
 			'trans_date'=>date('Y-m-d H:i:s'),
@@ -233,7 +233,7 @@ class Items extends Secure_area implements iData_controller
 		$item_data = array(
 		'quantity'=>$cur_item_info->quantity + $this->input->post('newquantity')
 		);
-		if($this->Item->save($item_data,$item_id))
+		if($this->item->save($item_data,$item_id))
 		{			
 			echo json_encode(array('success'=>true,'message'=>$this->lang->line('items_successful_updating').' '.
 			$cur_item_info->name,'item_id'=>$item_id));
@@ -265,7 +265,7 @@ class Items extends Secure_area implements iData_controller
 		}
 
 		//Item data could be empty if tax information is being updated
-		if(empty($item_data) || $this->Item->update_multiple($item_data,$items_to_update))
+		if(empty($item_data) || $this->item->update_multiple($item_data,$items_to_update))
 		{
 			$items_taxes_data = array();
 			$tax_names = $this->input->post('tax_names');
@@ -277,7 +277,7 @@ class Items extends Secure_area implements iData_controller
 					$items_taxes_data[] = array('name'=>$tax_names[$k], 'percent'=>$tax_percents[$k] );
 				}
 			}
-			$this->Item_taxes->save_multiple($items_taxes_data, $items_to_update);
+			$this->item_taxes->save_multiple($items_taxes_data, $items_to_update);
 
 			echo json_encode(array('success'=>true,'message'=>$this->lang->line('items_successful_bulk_edit')));
 		}
@@ -291,7 +291,7 @@ class Items extends Secure_area implements iData_controller
 	{
 		$items_to_delete=$this->input->post('ids');
 
-		if($this->Item->delete_list($items_to_delete))
+		if($this->item->delete_list($items_to_delete))
 		{
 			echo json_encode(array('success'=>true,'message'=>$this->lang->line('items_successful_deleted').' '.
 			count($items_to_delete).' '.$this->lang->line('items_one_or_multiple')));
@@ -354,7 +354,7 @@ class Items extends Secure_area implements iData_controller
 						$item_data['item_number'] = $item_number;
 					}
 					
-					if($this->Item->save($item_data)) 
+					if($this->item->save($item_data)) 
 					{
 						$items_taxes_data = null;
 						//tax 1
@@ -372,7 +372,7 @@ class Items extends Secure_area implements iData_controller
 						// save tax values
 						if(count($items_taxes_data) > 0)
 						{
-							$this->Item_taxes->save($items_taxes_data, $item_data['item_id']);
+							$this->item_taxes->save($items_taxes_data, $item_data['item_id']);
 						}
 						
 							$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;

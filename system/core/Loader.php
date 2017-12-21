@@ -275,7 +275,7 @@ class CI_Loader {
 			throw new RuntimeException('The model name you are loading is the name of a resource that is already being used: '.$name);
 		}
 
-		if ($db_conn !== FALSE && ! class_exists('CI_DB_driver', FALSE))
+		if ($db_conn !== FALSE && ! class_exists('CI_DB', FALSE))
 		{
 			if ($db_conn === TRUE)
 			{
@@ -320,7 +320,7 @@ class CI_Loader {
 			}
 		}
 
-		$model = ucfirst($model);
+		# $model = ucfirst($model);
 		if ( ! class_exists($model, FALSE))
 		{
 			foreach ($this->_ci_model_paths as $mod_path)
@@ -407,9 +407,9 @@ class CI_Loader {
 	{
 		$CI =& get_instance();
 
-		if ( ! is_object($db) OR ! ($db instanceof CI_DB_driver))
+		if ( ! is_object($db) OR ! ($db instanceof CI_DB))
 		{
-			class_exists('CI_DB_driver', FALSE) OR $this->database();
+			class_exists('CI_DB', FALSE) OR $this->database();
 			$db =& $CI->db;
 		}
 
@@ -438,9 +438,9 @@ class CI_Loader {
 	public function dbforge($db = NULL, $return = FALSE)
 	{
 		$CI =& get_instance();
-		if ( ! is_object($db) OR ! ($db instanceof CI_DB_driver))
+		if ( ! is_object($db) OR ! ($db instanceof CI_DB))
 		{
-			class_exists('CI_DB_driver', FALSE) OR $this->database();
+			class_exists('CI_DB', FALSE) OR $this->database();
 			$db =& $CI->db;
 		}
 

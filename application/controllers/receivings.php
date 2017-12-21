@@ -107,9 +107,9 @@ class Receivings extends Secure_area
 		$data['receipt_title']=$this->lang->line('recvs_receipt');
 		$data['transaction_time']= date('m/d/Y h:i:s a');
 		$supplier_id=$this->receiving_lib->get_supplier();
-		$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
+		$employee_id=$this->employee->get_logged_in_employee_info()->person_id;
 		$comment = $this->input->post('comment');
-		$emp_info=$this->Employee->get_info($employee_id);
+		$emp_info=$this->employee->get_info($employee_id);
 		$payment_type = $this->input->post('payment_type');
 		$data['payment_type']=$this->input->post('payment_type');
 
@@ -147,7 +147,7 @@ class Receivings extends Secure_area
 		$data['receipt_title']=$this->lang->line('recvs_receipt');
 		$data['transaction_time']= date('m/d/Y h:i:s a', strtotime($receiving_info['receiving_time']));
 		$supplier_id=$this->receiving_lib->get_supplier();
-		$emp_info=$this->Employee->get_info($receiving_info['employee_id']);
+		$emp_info=$this->employee->get_info($receiving_info['employee_id']);
 		$data['payment_type']=$receiving_info['payment_type'];
 
 		$data['employee']=$emp_info->first_name.' '.$emp_info->last_name;
@@ -165,12 +165,12 @@ class Receivings extends Secure_area
 
 	function _reload($data=array())
 	{
-		$person_info = $this->Employee->get_logged_in_employee_info();
+		$person_info = $this->employee->get_logged_in_employee_info();
 		$data['cart']=$this->receiving_lib->get_cart();
 		$data['modes']=array('receive'=>$this->lang->line('recvs_receiving'),'return'=>$this->lang->line('recvs_return'));
 		$data['mode']=$this->receiving_lib->get_mode();
 		$data['total']=$this->receiving_lib->get_total();
-		$data['items_module_allowed'] = $this->Employee->has_permission('items', $person_info->person_id);
+		$data['items_module_allowed'] = $this->employee->has_permission('items', $person_info->person_id);
 		$data['payment_options']=array(
 			$this->lang->line('sales_cash') => $this->lang->line('sales_cash'),
 			$this->lang->line('sales_check') => $this->lang->line('sales_check'),

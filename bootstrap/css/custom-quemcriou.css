@@ -1,0 +1,108 @@
+@import url(bootstrap.min.css);
+@import url(https://fonts.googleapis.com/css?family=Raleway:200,400);
+/*
+Customizações no css que sobrepõe o bootstrap com estilos do site quemcriou
+*/
+body{
+    font-family: 'Raleway',sans-serif;
+    padding-top: 50px;
+}
+h2>small{
+    color: #464646;
+}
+.lightgray-background{
+    background-color: #c4c4c4
+}
+.drop-shadow{
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, .5);
+}
+.container-banner {
+    background-image: url(../../media/banner/banner_principal-642x300.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 387px;
+}
+@media (min-width:540px){
+    .container-banner {
+        background-image: url(../../media/banner/banner_principal-768x387.png);
+        min-height: 300px;
+        padding-top: 50px;
+    }
+    .hold-left{
+        margin-left: 40px;
+        max-width: 300px;
+    }
+    .faixa{
+        padding-top: 20px;
+        height: 80px;
+    }
+    .subtitle-center{
+        padding-top: 50px;
+        padding-left: 40px;
+    }
+    .subtitle2{
+        padding-top: 20px;
+    }
+}
+@media (min-width:800px){
+    .container-banner {
+        background-image: url(../../media/banner/banner_principal.png);
+        min-height: 700px;
+    }
+}
+@media(max-width:770px){
+    .col-xs-right{
+        text-align:right;
+    }
+}
+.logobackcolor{
+    background-color: #ff6600;
+    color: white;
+}
+.logocolor{
+    color: #ff6600;
+}
+.btn.logobackcolor:hover{
+    background-color: #595959;
+    border-color: white;
+    color: white;
+}
+.bordered{
+    border: 2px solid;
+}
+.subtitle{
+    font-size: 28px;
+    font-weight: 200;
+}
+.graybackcolor{
+    background-color: #373737;
+    border-bottom: #ff6600 solid 2px;
+}
+.subtitle2{
+    border-bottom: #ff6600 solid 1px;
+}
+.text-white{
+    color: white;
+}
+.container-fluid.has-feedback{
+    margin-top:10px;
+}
+.img-sobreposta{
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    margin-left: -15px;
+    z-index: 2;
+}
+.logotab-img{
+    padding: 5px 5px;
+}
+.navbar-toggle {
+    margin-left: 10px;
+    float: left;
+}
+.userid{
+    width: 5%;
+    min-width: 35px;
+}

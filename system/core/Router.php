@@ -300,7 +300,7 @@ class CI_Router {
 			$method = 'index';
 		}
 
-		if ( ! file_exists(APPPATH.'controllers/'.$this->directory.ucfirst($class).'.php'))
+		if ( ! file_exists(APPPATH.'controllers/'.$class.'.php'))
 		{
 			// This will trigger 404 later
 			return;
