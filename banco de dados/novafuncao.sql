@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS `pos_servicetype` (
   PRIMARY KEY (`servicetype_id`))
 ENGINE = InnoDB;
 
+
 -- -----------------------------------------------------
 -- Table `pos_service`
 -- -----------------------------------------------------
