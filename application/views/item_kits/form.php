@@ -48,10 +48,10 @@ echo form_open('item_kits/save/'.$item_kit_info->item_kit_id,array('id'=>'item_k
 		<th><?php echo $this->lang->line('item_kits_quantity');?></th>
 	</tr>
 	
-	<?php foreach ($this->Item_kit_items->get_info($item_kit_info->item_kit_id) as $item_kit_item) {?>
+	<?php foreach ($this->item_kit_items->get_info($item_kit_info->item_kit_id) as $item_kit_item) {?>
 		<tr>
 			<?php
-			$item_info = $this->Item->get_info($item_kit_item['item_id']);
+			$item_info = $this->item->get_info($item_kit_item['item_id']);
 			?>
 			<td><a href="#" onclick='return deleteItemKitRow(this);'>X</a></td>
 			<td><?php echo $item_info->name; ?></td>

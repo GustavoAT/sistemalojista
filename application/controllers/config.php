@@ -32,7 +32,7 @@ class Config extends Secure_area
 		'print_after_sale'=>$this->input->post('print_after_sale')	
 		);
 		
-		if( $this->Appconfig->batch_save( $batch_save_data ) )
+		if( $this->appconfig->batch_save( $batch_save_data ) )
 		{
 			echo json_encode(array('success'=>true,'message'=>$this->lang->line('config_saved_successfully')));
 		}

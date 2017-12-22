@@ -15,14 +15,14 @@ class Receivings extends Secure_area
 
 	function item_search()
 	{
-		$suggestions = $this->Item->get_item_search_suggestions($this->input->post('q'),$this->input->post('limit'));
-		$suggestions = array_merge($suggestions, $this->Item_kit->get_item_kit_search_suggestions($this->input->post('q'),$this->input->post('limit')));
+		$suggestions = $this->item->get_item_search_suggestions($this->input->post('q'),$this->input->post('limit'));
+		$suggestions = array_merge($suggestions, $this->item_kit->get_item_kit_search_suggestions($this->input->post('q'),$this->input->post('limit')));
 		echo implode("\n",$suggestions);
 	}
 
 	function supplier_search()
 	{
-		$suggestions = $this->Supplier->get_suppliers_search_suggestions($this->input->post('q'),$this->input->post('limit'));
+		$suggestions = $this->supplier->get_suppliers_search_suggestions($this->input->post('q'),$this->input->post('limit'));
 		echo implode("\n",$suggestions);
 	}
 
@@ -122,12 +122,12 @@ class Receivings extends Secure_area
 
 		if($supplier_id!=-1)
 		{
-			$suppl_info=$this->Supplier->get_info($supplier_id);
+			$suppl_info=$this->supplier->get_info($supplier_id);
 			$data['supplier']=$suppl_info->first_name.' '.$suppl_info->last_name;
 		}
 
 		//SAVE receiving to database
-		$data['receiving_id']='RECV '.$this->Receiving->save($data['cart'], $supplier_id,$employee_id,$comment,$payment_type);
+		$data['receiving_id']='RECV '.$this->receiving->save($data['cart'], $supplier_id,$employee_id,$comment,$payment_type);
 		
 		if ($data['receiving_id'] == 'RECV -1')
 		{
@@ -140,7 +140,7 @@ class Receivings extends Secure_area
 
 	function receipt($receiving_id)
 	{
-		$receiving_info = $this->Receiving->get_info($receiving_id)->row_array();
+		$receiving_info = $this->receiving->get_info($receiving_id)->row_array();
 		$this->receiving_lib->copy_entire_receiving($receiving_id);
 		$data['cart']=$this->receiving_lib->get_cart();
 		$data['total']=$this->receiving_lib->get_total();
@@ -154,7 +154,7 @@ class Receivings extends Secure_area
 
 		if($supplier_id!=-1)
 		{
-			$supplier_info=$this->Supplier->get_info($supplier_id);
+			$supplier_info=$this->supplier->get_info($supplier_id);
 			$data['supplier']=$supplier_info->first_name.' '.$supplier_info->last_name;
 		}
 		$data['receiving_id']='RECV '.$receiving_id;
@@ -181,7 +181,7 @@ class Receivings extends Secure_area
 		$supplier_id=$this->receiving_lib->get_supplier();
 		if($supplier_id!=-1)
 		{
-			$info=$this->Supplier->get_info($supplier_id);
+			$info=$this->supplier->get_info($supplier_id);
 			$data['supplier']=$info->first_name.' '.$info->last_name;
 		}
 		$this->load->view("receivings/receiving",$data);

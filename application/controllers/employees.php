@@ -46,7 +46,7 @@ class Employees extends Person_controller
 	function view($employee_id=-1)
 	{
 		$data['person_info']=$this->employee->get_info($employee_id);
-		$data['all_modules']=$this->Module->get_all_modules();
+		$data['all_modules']=$this->module->get_all_modules();
 		$this->load->view("employees/form",$data);
 	}
 	

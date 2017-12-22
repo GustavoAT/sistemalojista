@@ -15,14 +15,14 @@ class Sales extends Secure_area
 
 	function item_search()
 	{
-		$suggestions = $this->Item->get_item_search_suggestions($this->input->post('q'),$this->input->post('limit'));
-		$suggestions = array_merge($suggestions, $this->Item_kit->get_item_kit_search_suggestions($this->input->post('q'),$this->input->post('limit')));
+		$suggestions = $this->item->get_item_search_suggestions($this->input->post('q'),$this->input->post('limit'));
+		$suggestions = array_merge($suggestions, $this->item_kit->get_item_kit_search_suggestions($this->input->post('q'),$this->input->post('limit')));
 		echo implode("\n",$suggestions);
 	}
 
 	function customer_search()
 	{
-		$suggestions = $this->Customer->get_customer_search_suggestions($this->input->post('q'),$this->input->post('limit'));
+		$suggestions = $this->customer->get_customer_search_suggestions($this->input->post('q'),$this->input->post('limit'));
 		echo implode("\n",$suggestions);
 	}
 
@@ -195,12 +195,12 @@ class Sales extends Secure_area
 
 		if($customer_id!=-1)
 		{
-			$cust_info=$this->Customer->get_info($customer_id);
+			$cust_info=$this->customer->get_info($customer_id);
 			$data['customer']=$cust_info->first_name.' '.$cust_info->last_name;
 		}
 
 		//SAVE sale to database
-		$data['sale_id']='POS '.$this->Sale->save($data['cart'], $customer_id,$employee_id,$comment,$data['payments']);
+		$data['sale_id']='POS '.$this->sale->save($data['cart'], $customer_id,$employee_id,$comment,$data['payments']);
 		if ($data['sale_id'] == 'POS -1')
 		{
 			$data['error_message'] = $this->lang->line('sales_transaction_failed');
@@ -226,7 +226,7 @@ class Sales extends Secure_area
 	
 	function receipt($sale_id)
 	{
-		$sale_info = $this->Sale->get_info($sale_id)->row_array();
+		$sale_info = $this->sale->get_info($sale_id)->row_array();
 		$this->sale_lib->copy_entire_sale($sale_id);
 		$data['cart']=$this->sale_lib->get_cart();
 		$data['payments']=$this->sale_lib->get_payments();
@@ -243,7 +243,7 @@ class Sales extends Secure_area
 
 		if($customer_id!=-1)
 		{
-			$cust_info=$this->Customer->get_info($customer_id);
+			$cust_info=$this->customer->get_info($customer_id);
 			$data['customer']=$cust_info->first_name.' '.$cust_info->last_name;
 		}
 		$data['sale_id']='POS '.$sale_id;
@@ -257,7 +257,7 @@ class Sales extends Secure_area
 		$data = array();
 
 		$data['customers'] = array('' => 'No Customer');
-		foreach ($this->Customer->get_all()->result() as $customer)
+		foreach ($this->customer->get_all()->result() as $customer)
 		{
 			$data['customers'][$customer->person_id] = $customer->first_name . ' '. $customer->last_name;
 		}
@@ -268,7 +268,7 @@ class Sales extends Secure_area
 			$data['employees'][$employee->person_id] = $employee->first_name . ' '. $employee->last_name;
 		}
 
-		$data['sale_info'] = $this->Sale->get_info($sale_id)->row_array();
+		$data['sale_info'] = $this->sale->get_info($sale_id)->row_array();
 				
 		
 		$this->load->view('sales/edit', $data);
@@ -278,7 +278,7 @@ class Sales extends Secure_area
 	{
 		$data = array();
 		
-		if ($this->Sale->delete($sale_id))
+		if ($this->sale->delete($sale_id))
 		{
 			$data['success'] = true;
 		}
@@ -300,7 +300,7 @@ class Sales extends Secure_area
 			'comment' => $this->input->post('comment')
 		);
 		
-		if ($this->Sale->update($sale_data, $sale_id))
+		if ($this->sale->update($sale_data, $sale_id))
 		{
 			echo json_encode(array('success'=>true,'message'=>$this->lang->line('sales_successfully_updated')));
 		}
@@ -355,7 +355,7 @@ class Sales extends Secure_area
 		$customer_id=$this->sale_lib->get_customer();
 		if($customer_id!=-1)
 		{
-			$info=$this->Customer->get_info($customer_id);
+			$info=$this->customer->get_info($customer_id);
 			$data['customer']=$info->first_name.' '.$info->last_name;
 			$data['customer_email']=$info->email;
 		}
@@ -391,7 +391,7 @@ class Sales extends Secure_area
 
 		if($customer_id!=-1)
 		{
-			$cust_info=$this->Customer->get_info($customer_id);
+			$cust_info=$this->customer->get_info($customer_id);
 			$data['customer']=$cust_info->first_name.' '.$cust_info->last_name;
 		}
 
@@ -403,7 +403,7 @@ class Sales extends Secure_area
 		}
 
 		//SAVE sale to database
-		$data['sale_id']='POS '.$this->Sale_suspended->save($data['cart'], $customer_id,$employee_id,$comment,$data['payments']);
+		$data['sale_id']='POS '.$this->sale_suspended->save($data['cart'], $customer_id,$employee_id,$comment,$data['payments']);
 		if ($data['sale_id'] == 'POS -1')
 		{
 			$data['error_message'] = $this->lang->line('sales_transaction_failed');
@@ -415,7 +415,7 @@ class Sales extends Secure_area
 	function suspended()
 	{
 		$data = array();
-		$data['suspended_sales'] = $this->Sale_suspended->get_all()->result_array();
+		$data['suspended_sales'] = $this->sale_suspended->get_all()->result_array();
 		$this->load->view('sales/suspended', $data);
 	}
 	
@@ -424,7 +424,7 @@ class Sales extends Secure_area
 		$sale_id = $this->input->post('suspended_sale_id');
 		$this->sale_lib->clear_all();
 		$this->sale_lib->copy_entire_suspended_sale($sale_id);
-		$this->Sale_suspended->delete($sale_id);
+		$this->sale_suspended->delete($sale_id);
     	$this->_reload();
 	}
 }

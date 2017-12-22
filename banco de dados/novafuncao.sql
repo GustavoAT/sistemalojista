@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `pos_service_items` (
 ENGINE = InnoDB;
 
 
-INSERT INTO `pos_modules` VALUES ('module_service','module_service_desc',15,'service');
+INSERT INTO `pos_modules` VALUES ('module_service','module_service_desc',15,'service'),('module_servicetype','module_servicetype_desc',95,'servicetype');
 INSERT INTO `pos_permissions` VALUES ('service',1),('service',2);
 
 

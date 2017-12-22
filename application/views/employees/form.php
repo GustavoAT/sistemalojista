@@ -56,7 +56,7 @@ foreach($all_modules->result() as $module)
 {
 ?>
 <li>	
-<?php echo form_checkbox("permissions[]",$module->module_id,$this->Employee->has_permission($module->module_id,$person_info->person_id)); ?>
+<?php echo form_checkbox("permissions[]",$module->module_id,$this->employee->has_permission($module->module_id,$person_info->person_id)); ?>
 <span class="medium"><?php echo $this->lang->line('module_'.$module->module_id);?>:</span>
 <span class="small"><?php echo $this->lang->line('module_'.$module->module_id.'_desc');?></span>
 </li>

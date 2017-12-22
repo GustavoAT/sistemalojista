@@ -106,7 +106,7 @@ if (isset($error_message))
 </div>
 <?php $this->load->view("partial/footer"); ?>
 
-<?php if ($this->Appconfig->get('print_after_sale'))
+<?php if ($this->appconfig->get('print_after_sale'))
 {
 ?>
 <script type="text/javascript">

@@ -93,14 +93,14 @@ echo form_close();
 <tr bgcolor="#FF0033" align="center" style="font-weight:bold"><td colspan="4"><?php echo $this->lang->line('items_inventory_data_tracking'); ?></td></tr>
 <tr align="center" style="font-weight:bold"><td width="15%"><?php echo $this->lang->line('items_data'); ?></td><td width="25%"><?php echo $this->lang->line('employees_employee'); ?></td><td width="15%"><?php echo $this->lang->line('items_in_out_qty'); ?></td><td width="45%"><?php echo $this->lang->line('items_remarks'); ?></td></tr>
 <?php
-foreach($this->Inventory->get_inventory_data_for_item($item_info->item_id)->result_array() as $row)
+foreach($this->inventory->get_inventory_data_for_item($item_info->item_id)->result_array() as $row)
 {
 ?>
 <tr bgcolor="#CCCCCC" align="center">
 <td><?php echo $row['trans_date'];?></td>
 <td><?php
 	$person_id = $row['trans_user'];
-	$employee = $this->Employee->get_info($person_id);
+	$employee = $this->employee->get_info($person_id);
 	echo $employee->first_name." ".$employee->last_name;
 	?>
 </td>

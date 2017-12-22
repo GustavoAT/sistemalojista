@@ -18,7 +18,7 @@
 				<?php
 				if (isset($suspended_sale['customer_id']))
 				{
-					$customer = $this->Customer->get_info($suspended_sale['customer_id']);
+					$customer = $this->customer->get_info($suspended_sale['customer_id']);
 					echo $customer->first_name. ' '. $customer->last_name;
 				}
 				else

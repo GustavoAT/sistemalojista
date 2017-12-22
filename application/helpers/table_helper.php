@@ -186,7 +186,7 @@ function get_items_manage_table_data_rows($items,$controller)
 function get_item_data_row($item,$controller)
 {
 	$CI =& get_instance();
-	$item_tax_info=$CI->Item_taxes->get_info($item->item_id);
+	$item_tax_info=$CI->item_taxes->get_info($item->item_id);
 	$tax_percents = '';
 	foreach($item_tax_info as $tax_info)
 	{

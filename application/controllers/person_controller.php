@@ -18,7 +18,7 @@ abstract class Person_controller extends Secure_area implements iPerson_controll
 		if($people_to_email!=false)
 		{
 			$mailto_url='mailto:';
-			foreach($this->Person->get_multiple_info($people_to_email)->result() as $person)
+			foreach($this->person->get_multiple_info($people_to_email)->result() as $person)
 			{
 				$mailto_url.=$person->email.',';	
 			}
@@ -37,7 +37,7 @@ abstract class Person_controller extends Secure_area implements iPerson_controll
 	function get_row()
 	{
 		$person_id = $this->input->post('row_id');
-		$data_row=get_person_data_row($this->Person->get_info($person_id),$this);
+		$data_row=get_person_data_row($this->person->get_info($person_id),$this);
 		echo $data_row;
 	}
 		

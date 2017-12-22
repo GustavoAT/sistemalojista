@@ -87,15 +87,15 @@ class Items extends Secure_area implements iData_controller
 		$data['item_info']=$this->item->get_info($item_id);
 		$data['item_tax_info']=$this->item_taxes->get_info($item_id);
 		$suppliers = array('' => $this->lang->line('items_none'));
-		foreach($this->Supplier->get_all()->result_array() as $row)
+		foreach($this->supplier->get_all()->result_array() as $row)
 		{
 			$suppliers[$row['person_id']] = $row['company_name'] .' ('.$row['first_name'] .' '. $row['last_name'].')';
 		}
 
 		$data['suppliers']=$suppliers;
 		$data['selected_supplier'] = $this->item->get_info($item_id)->supplier_id;
-		$data['default_tax_1_rate']=($item_id==-1) ? $this->Appconfig->get('default_tax_1_rate') : '';
-		$data['default_tax_2_rate']=($item_id==-1) ? $this->Appconfig->get('default_tax_2_rate') : '';
+		$data['default_tax_1_rate']=($item_id==-1) ? $this->appconfig->get('default_tax_1_rate') : '';
+		$data['default_tax_2_rate']=($item_id==-1) ? $this->appconfig->get('default_tax_2_rate') : '';
 		$this->load->view("items/form",$data);
 	}
 	
@@ -166,7 +166,7 @@ class Items extends Secure_area implements iData_controller
 		'is_serialized'=>$this->input->post('is_serialized')
 		);
 		
-		$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
+		$employee_id=$this->employee->get_logged_in_employee_info()->person_id;
 		$cur_item_info = $this->item->get_info($item_id);
 
 
@@ -193,7 +193,7 @@ class Items extends Secure_area implements iData_controller
 				'trans_comment'=>$this->lang->line('items_manually_editing_of_quantity'),
 				'trans_inventory'=>$cur_item_info ? $this->input->post('quantity') - $cur_item_info->quantity : $this->input->post('quantity')
 			);
-			$this->Inventory->insert($inv_data);
+			$this->inventory->insert($inv_data);
 			$items_taxes_data = array();
 			$tax_names = $this->input->post('tax_names');
 			$tax_percents = $this->input->post('tax_percents');

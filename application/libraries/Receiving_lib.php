@@ -50,10 +50,10 @@ class Receiving_lib
 	function add_item($item_id,$quantity=1,$discount=0,$price=null,$description=null,$serialnumber=null)
 	{
 		//make sure item exists in database.
-		if(!$this->CI->Item->exists($item_id))
+		if(!$this->CI->item->exists($item_id))
 		{
 			//try to get item id given an item_number
-			$item_id = $this->CI->Item->get_item_id($item_id);
+			$item_id = $this->CI->item->get_item_id($item_id);
 
 			if(!$item_id)
 				return false;
@@ -98,14 +98,14 @@ class Receiving_lib
 		array(
 			'item_id'=>$item_id,
 			'line'=>$insertkey,
-			'name'=>$this->CI->Item->get_info($item_id)->name,
-			'description'=>$description!=null ? $description: $this->CI->Item->get_info($item_id)->description,
+			'name'=>$this->CI->item->get_info($item_id)->name,
+			'description'=>$description!=null ? $description: $this->CI->item->get_info($item_id)->description,
 			'serialnumber'=>$serialnumber!=null ? $serialnumber: '',
-			'allow_alt_description'=>$this->CI->Item->get_info($item_id)->allow_alt_description,
-			'is_serialized'=>$this->CI->Item->get_info($item_id)->is_serialized,
+			'allow_alt_description'=>$this->CI->item->get_info($item_id)->allow_alt_description,
+			'is_serialized'=>$this->CI->item->get_info($item_id)->is_serialized,
 			'quantity'=>$quantity,
             'discount'=>$discount,
-			'price'=>$price!=null ? $price: $this->CI->Item->get_info($item_id)->cost_price
+			'price'=>$price!=null ? $price: $this->CI->item->get_info($item_id)->cost_price
 			)
 		);
 
@@ -148,7 +148,7 @@ class Receiving_lib
 
 		if(count($pieces)==2)
 		{
-			return $this->CI->Receiving->exists($pieces[1]);
+			return $this->CI->receiving->exists($pieces[1]);
 		}
 
 		return false;
@@ -161,7 +161,7 @@ class Receiving_lib
 
 		if(count($pieces)==2)
 		{
-			return $this->CI->Item_kit->exists($pieces[1]);
+			return $this->CI->item_kit->exists($pieces[1]);
 		}
 
 		return false;
@@ -176,11 +176,11 @@ class Receiving_lib
 		$this->empty_cart();
 		$this->delete_supplier();
 
-		foreach($this->CI->Receiving->get_receiving_items($receiving_id)->result() as $row)
+		foreach($this->CI->receiving->get_receiving_items($receiving_id)->result() as $row)
 		{
 			$this->add_item($row->item_id,-$row->quantity_purchased,$row->discount_percent,$row->item_unit_price,$row->description,$row->serialnumber);
 		}
-		$this->set_supplier($this->CI->Receiving->get_supplier($receiving_id)->person_id);
+		$this->set_supplier($this->CI->receiving->get_supplier($receiving_id)->person_id);
 	}
 	
 	function add_item_kit($external_item_kit_id)
@@ -189,7 +189,7 @@ class Receiving_lib
 		$pieces = explode(' ',$external_item_kit_id);
 		$item_kit_id = $pieces[1];
 		
-		foreach ($this->CI->Item_kit_items->get_info($item_kit_id) as $item_kit_item)
+		foreach ($this->CI->item_kit_items->get_info($item_kit_id) as $item_kit_item)
 		{
 			$this->add_item($item_kit_item['item_id'], $item_kit_item['quantity']);
 		}
@@ -200,11 +200,11 @@ class Receiving_lib
 		$this->empty_cart();
 		$this->delete_supplier();
 
-		foreach($this->CI->Receiving->get_receiving_items($receiving_id)->result() as $row)
+		foreach($this->CI->receiving->get_receiving_items($receiving_id)->result() as $row)
 		{
 			$this->add_item($row->item_id,$row->quantity_purchased,$row->discount_percent,$row->item_unit_price,$row->description,$row->serialnumber);
 		}
-		$this->set_supplier($this->CI->Receiving->get_supplier($receiving_id)->person_id);
+		$this->set_supplier($this->CI->receiving->get_supplier($receiving_id)->person_id);
 
 	}
 

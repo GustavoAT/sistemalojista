@@ -40,7 +40,7 @@ class Sale extends CI_Model
 
 		$sales_data = array(
 			'sale_time' => date('Y-m-d H:i:s'),
-			'customer_id'=> $this->Customer->exists($customer_id) ? $customer_id : null,
+			'customer_id'=> $this->customer->exists($customer_id) ? $customer_id : null,
 			'employee_id'=>$employee_id,
 			'payment_type'=>$payment_types,
 			'comment'=>$comment
@@ -73,7 +73,7 @@ class Sale extends CI_Model
 
 		foreach($items as $line=>$item)
 		{
-			$cur_item_info = $this->Item->get_info($item['item_id']);
+			$cur_item_info = $this->item->get_info($item['item_id']);
 
 			$sales_items_data = array
 			(
@@ -92,7 +92,7 @@ class Sale extends CI_Model
 
 			//Update stock quantity
 			$item_data = array('quantity'=>$cur_item_info->quantity - $item['quantity']);
-			$this->Item->save($item_data,$item['item_id']);
+			$this->item->save($item_data,$item['item_id']);
 			
 			//Ramel Inventory Tracking
 			//Inventory Count Details
@@ -106,13 +106,13 @@ class Sale extends CI_Model
 				'trans_comment'=>$sale_remarks,
 				'trans_inventory'=>$qty_buy
 			);
-			$this->Inventory->insert($inv_data);
+			$this->inventory->insert($inv_data);
 			//------------------------------------Ramel
 
-			$customer = $this->Customer->get_info($customer_id);
+			$customer = $this->customer->get_info($customer_id);
  			if ($customer_id == -1 or $customer->taxable)
  			{
-				foreach($this->Item_taxes->get_info($item['item_id']) as $row)
+				foreach($this->item_taxes->get_info($item['item_id']) as $row)
 				{
 					$this->db->insert('sales_items_taxes', array(
 						'sale_id' 	=>$sale_id,
@@ -167,7 +167,7 @@ class Sale extends CI_Model
 	{
 		$this->db->from('sales');
 		$this->db->where('sale_id',$sale_id);
-		return $this->Customer->get_info($this->db->get()->row()->customer_id);
+		return $this->customer->get_info($this->db->get()->row()->customer_id);
 	}
 
 	//We create a temp table that allows us to do easy report/sales queries

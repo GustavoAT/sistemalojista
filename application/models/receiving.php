@@ -23,7 +23,7 @@ class Receiving extends CI_Model
 			return -1;
 
 		$receivings_data = array(
-		'supplier_id'=> $this->Supplier->exists($supplier_id) ? $supplier_id : null,
+		'supplier_id'=> $this->supplier->exists($supplier_id) ? $supplier_id : null,
 		'employee_id'=>$employee_id,
 		'payment_type'=>$payment_type,
 		'comment'=>$comment
@@ -38,7 +38,7 @@ class Receiving extends CI_Model
 
 		foreach($items as $line=>$item)
 		{
-			$cur_item_info = $this->Item->get_info($item['item_id']);
+			$cur_item_info = $this->item->get_info($item['item_id']);
 
 			$receivings_items_data = array
 			(
@@ -57,7 +57,7 @@ class Receiving extends CI_Model
 
 			//Update stock quantity
 			$item_data = array('quantity'=>$cur_item_info->quantity + $item['quantity']);
-			$this->Item->save($item_data,$item['item_id']);
+			$this->item->save($item_data,$item['item_id']);
 			
 			$qty_recv = $item['quantity'];
 			$recv_remarks ='RECV '.$receiving_id;
@@ -69,9 +69,9 @@ class Receiving extends CI_Model
 				'trans_comment'=>$recv_remarks,
 				'trans_inventory'=>$qty_recv
 			);
-			$this->Inventory->insert($inv_data);
+			$this->inventory->insert($inv_data);
 
-			$supplier = $this->Supplier->get_info($supplier_id);
+			$supplier = $this->supplier->get_info($supplier_id);
 		}
 		$this->db->trans_complete();
 		
@@ -94,7 +94,7 @@ class Receiving extends CI_Model
 	{
 		$this->db->from('receivings');
 		$this->db->where('receiving_id',$receiving_id);
-		return $this->Supplier->get_info($this->db->get()->row()->supplier_id);
+		return $this->supplier->get_info($this->db->get()->row()->supplier_id);
 	}
 	
 	//We create a temp table that allows us to do easy report/receiving queries
