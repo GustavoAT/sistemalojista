@@ -17,11 +17,11 @@ $lang['employees_username_required']='Usuário é um campo obrigatório';
 $lang['employees_username_minlength']='O Usuário deve conter ao menos 5 caracteres';
 $lang['employees_password_required']='A Senha é obrigatória';
 $lang['employees_password_minlength']='A Senha deve conter ao menos 8 caracteres';
-$lang['employees_password_must_match']='As Senhas nao coincidem';
+$lang['employees_password_must_match']='As Senhas não coincidem';
 $lang['employees_basic_information']='Informação Básica de Funcionários';
 $lang['employees_login_info']='Dados para Login';
 $lang['employees_permission_info']='Permições de Acesso do Funcionário';
 $lang['employees_permission_desc']='Selecione abaixo as permissões de acesso aos módulos';
-$lang['employees_error_updating_demo_admin'] = 'Você nao pode alterar o usuário administrador';
-$lang['employees_error_deleting_demo_admin'] = 'Você nao pode excluir o usuário administrador';
+$lang['employees_error_updating_demo_admin'] = 'Você não pode alterar o usuário administrador';
+$lang['employees_error_deleting_demo_admin'] = 'Você não pode excluir o usuário administrador';
 ?>
