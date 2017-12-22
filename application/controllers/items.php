@@ -132,7 +132,7 @@ class Items extends Secure_area implements iData_controller
 	{
 		$data = array();
 		$suppliers = array('' => $this->lang->line('items_none'));
-		foreach($this->Supplier->get_all()->result_array() as $row)
+		foreach($this->supplier->get_all()->result_array() as $row)
 		{
 			$suppliers[$row['person_id']] = $row['first_name'] .' '. $row['last_name'];
 		}
@@ -343,7 +343,7 @@ class Items extends Secure_area implements iData_controller
 					'unit_price'	=>	$data[5],
 					'quantity'		=>	$data[10],
 					'reorder_level'	=>	$data[11],
-					'supplier_id'	=>  $this->Supplier->exists($data[3]) ? $data[3] : null,
+					'supplier_id'	=>  $this->supplier->exists($data[3]) ? $data[3] : null,
 					'allow_alt_description'=> $data[14] != '' ? '1' : '0',
 					'is_serialized'=>$data[15] != '' ? '1' : '0'
 					);
