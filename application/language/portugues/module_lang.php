@@ -19,6 +19,12 @@ $lang['module_reports_desc']='Ver e gerar relatórios | <b>Ctrl + 3</b>';
 $lang['module_items']='Produtos';
 $lang['module_items_desc']='Cadastrar, Atualizar, Excluir e Procurar Produtos | <b>Ctrl + 2</b>';
 
+$lang['module_servicetype']='Serviços';
+$lang['module_servicetype_desc']='Cadastrar, Atualizar, Excluir e Procurar Serviços';
+
+$lang['module_service']='Atendimento';
+$lang['module_service_desc']='Processar Serviços realizados';
+
 $lang['module_config']='Configurações';
 $lang['module_config_desc']='Alterar as configurações da loja | <b>Ctrl + 8</b>';
 
