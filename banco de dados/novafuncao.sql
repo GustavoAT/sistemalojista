@@ -4,7 +4,7 @@
 DROP TABLE IF EXISTS `pos_servicetype` ;
 
 CREATE TABLE IF NOT EXISTS `pos_servicetype` (
-  `servicetype_id` INT NOT NULL,
+  `servicetype_id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `service_cost` DOUBLE NULL,
   `comment` VARCHAR(100) NULL,
@@ -18,7 +18,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `pos_service` ;
 
 CREATE TABLE IF NOT EXISTS `pos_service` (
-  `service_id` INT(10) NOT NULL,
+  `service_id` INT(10) NOT NULL AUTO_INCREMENT,
   `servicetype_id` INT(10) NOT NULL,
   `person_id` INT(10) NULL,
   `start_time` TIMESTAMP NULL,

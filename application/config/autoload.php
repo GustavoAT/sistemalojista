@@ -96,7 +96,7 @@ $autoload['config'] = array();
 |
 */
 
-$autoload['language'] = array('common', 'config', 'customers', 'employees', 'error', 'items', 'login', 'module', 'reports', 'sales','suppliers','receivings','giftcards', 'item_kits');
+$autoload['language'] = array('common', 'config', 'customers', 'employees', 'error', 'items', 'login', 'module', 'reports', 'sales', 'services','suppliers','receivings','giftcards', 'item_kits');
 
 
 /*
@@ -109,7 +109,7 @@ $autoload['language'] = array('common', 'config', 'customers', 'employees', 'err
 |
 */
 
-$autoload['model'] = array('appconfig','person','customer','employee','module','item', 'item_taxes', 'sale', 'sale_suspended', 'supplier','inventory','receiving','giftcard', 'item_kit', 'item_kit_items');
+$autoload['model'] = array('appconfig','person','customer','employee','module','item', 'item_taxes', 'sale', 'sale_suspended', 'service', 'supplier','inventory','receiving','giftcard', 'item_kit', 'item_kit_items');
 
 
 /* End of file autoload.php */
