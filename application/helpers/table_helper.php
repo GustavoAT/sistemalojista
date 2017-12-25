@@ -65,6 +65,69 @@ function get_person_data_row($person,$controller)
 }
 
 /*
+Gets the html table to manage service.
+*/
+function get_service_manage_table($services,$controller)
+{
+	$CI =& get_instance();
+	$table='<table class="tablesorter" id="sortable_table">';
+	
+	$headers = array('<input type="checkbox" id="select_all" />', 
+	$CI->lang->line('common_first_name'),
+	$CI->lang->line('services_cost'),
+	$CI->lang->line('services_comment'),
+	'&nbsp');
+	
+	$table.='<thead><tr>';
+	foreach($headers as $header)
+	{
+		$table.="<th>$header</th>";
+	}
+	$table.='</tr></thead><tbody>';
+	$table.=get_service_manage_table_data_rows($services,$controller);
+	$table.='</tbody></table>';
+	return $table;
+}
+
+/*
+Gets the html data rows for the service.
+*/
+function get_service_manage_table_data_rows($services,$controller)
+{
+	$CI =& get_instance();
+	$table_data_rows='';
+	
+	foreach($services->result() as $service)
+	{
+		$table_data_rows.=get_service_data_row($service,$controller);
+	}
+	
+	if($service->num_rows()==0)
+	{
+		$table_data_rows.="<tr><td colspan='5'><div class='warning_message' style='padding:7px;'>".$CI->lang->line('services_no_services_to_display')."</div></tr></tr>";
+	}
+	
+	return $table_data_rows;
+}
+
+function get_service_data_row($service,$controller)
+{
+	$CI =& get_instance();
+	$controller_name=strtolower(get_class($CI));
+	$width = $controller->get_form_width();
+
+	$table_data_row='<tr>';
+	$table_data_row.="<td width='5%'><input type='checkbox' id='service_$service->servicetype_id' value='".$service->servicetype_id."'/></td>";
+	$table_data_row.='<td width="20%">'.character_limiter($service->name,13).'</td>';
+	$table_data_row.='<td width="20%">'.to_currency($service->service_cost).'</td>';
+	$table_data_row.='<td width="50%">'.character_limiter($service->comment,30).'</td>';	
+	$table_data_row.='<td width="5%">'.anchor($controller_name."/view/$service->service_id/width:$width", $CI->lang->line('common_edit'),array('class'=>'thickbox','title'=>$CI->lang->line($controller_name.'_update'))).'</td>';		
+	$table_data_row.='</tr>';
+	
+	return $table_data_row;
+}
+
+/*
 Gets the html table to manage suppliers.
 */
 function get_supplier_manage_table($suppliers,$controller)

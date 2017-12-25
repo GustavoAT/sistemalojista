@@ -11,4 +11,7 @@ $lang['services_successful_deleted']='Serviço excluído com sucesso';
 $lang['services_one_or_multiple']='Serviço(s)';
 $lang['services_cannot_be_deleted']='Não é possível excluir os Serviços selecionados. Um ou mais ja efetuou compras na loja.';
 $lang['services_basic_information']='Informação de Serviços';
+$lang['services_no_services_to_display']='Não há serviços para exibir';
+$lang['services_cost']='Custo';
+$lang['services_comment']='Comentários';
 ?>
