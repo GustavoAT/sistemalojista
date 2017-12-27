@@ -13,5 +13,6 @@ $lang['services_cannot_be_deleted']='Não é possível excluir os Serviços sele
 $lang['services_basic_information']='Informação de Serviços';
 $lang['services_no_services_to_display']='Não há serviços para exibir';
 $lang['services_cost']='Custo';
+$lang['services_cost_number']='O custo deve ser um número';
 $lang['services_comment']='Comentários';
 ?>

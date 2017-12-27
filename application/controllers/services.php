@@ -56,7 +56,6 @@ class Services extends Secure_area implements iData_controller
 	function save($service_id=-1)
 	{
 		$service_data = array(
-		'servicetype_id'=>$this->input->post('servicetype_id'),
 		'name'=>$this->input->post('name'),
 		'service_cost'=>$this->input->post('service_cost'),
 		'comment'=>$this->input->post('comment'),
@@ -169,6 +168,12 @@ class Services extends Secure_area implements iData_controller
 		echo json_encode( array('success'=>$success,'message'=>$msg) );
 	}
 	
+	function get_row()
+	{
+		$service_id = $this->input->post('row_id');
+		$data_row=get_service_data_row($this->service->get_info($service_id),$this);
+		echo $data_row;
+	}
 	/*
 	get the width for the add/edit form
 	*/
