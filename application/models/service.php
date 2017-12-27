@@ -48,8 +48,8 @@ class Service extends CI_Model
 		}
 		else
 		{
-			//Get empty base parent object, as $servicetype_id is NOT an service
-			$service_obj=parent::get_info(-1);
+			//Get empty base parent object
+			$service_obj=new stdClass();
 			
 			//Get all the fields from service table
 			$fields = $this->db->list_fields('servicetype');

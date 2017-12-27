@@ -19,7 +19,7 @@ class Services extends Secure_area implements iData_controller
 		$data['controller_name']=strtolower(get_class());
 		$data['form_width']=$this->get_form_width();
 		$data['manage_table']=get_service_manage_table( $this->service->get_all( $config['per_page'], $this->uri->segment( $config['uri_segment'] ) ), $this );
-		$this->load->view('service/manage',$data);
+		$this->load->view('services/manage',$data);
 	}
 	
 	/*

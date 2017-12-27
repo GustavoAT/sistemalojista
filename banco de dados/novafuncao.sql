@@ -89,7 +89,7 @@ ENGINE = InnoDB;
 
 
 INSERT INTO `pos_modules` VALUES ('module_services','module_services_desc',95,'services');
-INSERT INTO `pos_modules` VALUES ('module_attend','module_attend_desc',95,'attend');
+INSERT INTO `pos_modules` VALUES ('module_attend','module_attend_desc',15,'attend');
 INSERT INTO `pos_permissions` VALUES ('services',1),('services',2);
 
 

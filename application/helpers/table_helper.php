@@ -102,7 +102,7 @@ function get_service_manage_table_data_rows($services,$controller)
 		$table_data_rows.=get_service_data_row($service,$controller);
 	}
 	
-	if($service->num_rows()==0)
+	if($services->num_rows()==0)
 	{
 		$table_data_rows.="<tr><td colspan='5'><div class='warning_message' style='padding:7px;'>".$CI->lang->line('services_no_services_to_display')."</div></tr></tr>";
 	}

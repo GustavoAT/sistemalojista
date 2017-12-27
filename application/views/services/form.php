@@ -16,10 +16,10 @@ echo form_open('services/save/'.$service_info->service_id,array('id'=>'service_f
 	</div>
 </div>
 <div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('service_cost').':', 'service_cost'); ?>
+<?php echo form_label($this->lang->line('services_cost').':', 'service_cost'); ?>
 	<div class='form_field'>
 	<?php echo form_input(array(
-		'name'=>'lservice_cost',
+		'name'=>'service_cost',
 		'id'=>'service_cost',
 		'value'=>$service_info->service_cost)
 	);?>
