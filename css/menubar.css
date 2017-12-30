@@ -16,7 +16,7 @@
 {
 	position:relative;
 	margin:0 auto;
-	width:875px;
+	width:1000px;
 	text-align:left;
 }
 
@@ -64,7 +64,7 @@
 #menubar_navigation
 {
 	position:relative;
-	width:75%;
+	width:90%;
 	left:200px;
 	top:8px;
 	height:45%;
